@@ -9,8 +9,9 @@ Xcode will automatically generate async wrappers for most asynchronous methods, 
 
 * A comprehensive set of `async` wrappers for the asynchronous methods provided in the 100.12 release of the ArcGIS Runtime SDK for iOS.
 * Helper actors to support these wrappers.
+* A demo app showing async/await patterns in use with the ArcGIS Runtime SDK for iOS.
 
-If you find any methods that are missing an async wrapper, please open an issue or, better yet, please submit a PR adding the method.
+If you find any methods that are missing an async wrapper, please open an issue or, better yet, submit a PR adding the method.
 
 ## Requirements
 
@@ -18,29 +19,34 @@ If you find any methods that are missing an async wrapper, please open an issue 
 * Xcode 13.0 (or newer)
 * iOS 15 (or newer)
 
+## Known Issues
+* Canceling an AGSJob requires manually wrapping the job in a cancelable task and calling `AGSJob.progress.cancel()`.
+
 ## Instructions
+
+Add an `import ArcGISAsyncAwait` statement to your Swift source files. To include the source for `ArcGISAsyncAwait`, either use Swift Package Manager, or include the source files into your project.
 
 ### Swift Package Manager
 
- 1. Open your project in Xcode
- 2. Go to *File* > *Swift Packages* > *Add Package Dependency* option 
- 3. Enter `https://github.com/Esri/arcgis-runtime-ios-async-await` as the package repository URL
- 4. Choose version 100.12.0 or a later version. Click Next.
+ 1. Open your project in Xcode.
+ 2. Go to **File** > **Add Packages…**.
+ 3. Enter `https://github.com/Esri/arcgis-runtime-ios-async-await` as the Package URL.
+ 4. Set the `Dependency Rule` to **Branch** and reference the `main` branch. Click **Add Package**.
  
- Note: The ArcGIS Runtime Async Await Swift Package adds the ArcGIS SDK Swift Package as a dependency so no need to add both separately. If you already have the ArcGIS Runtime SDK Swift Package, delete that and just add the ArcGIS Runtime SDK Async Await Swift Package. 
+ Note: The ArcGIS Runtime Async Await Swift Package adds the ArcGIS Runtime SDK package as a dependency.
 
  New to Swift Package Manager? Visit [swift.org/package-manager/](https://swift.org/package-manager/).
 
 ### Manual
 
- 1. Clone or download this repo
- 2. Drag and drop the `AsyncWrappers.swift` and `AsyncWrapperActors.swift` files into your project through the Xcode Project Navigator pane
+ 1. Clone or download this repo.
+ 2. Drag and drop the `AsyncWrappers.swift` and `AsyncWrapperActors.swift` files into your project through the Xcode Project Navigator pane.
 
 ## Additional Resources
 
-* Want to start a new Runtime project? [Setup](https://developers.arcgis.com/ios/get-started) your dev environment
-* New to the API? Explore the documentation : [Guide](https://developers.arcgis.com/ios/) | [API Reference](https://developers.arcgis.com/ios/api-reference/)
-* Got a question? Ask the community on our [forum](https://community.esri.com/community/developers/native-app-developers/arcgis-runtime-sdk-for-ios/)
+* Want to start a new Runtime project? [Setup](https://developers.arcgis.com/ios/get-started) your dev environment.
+* New to the API? Explore the documentation : [Guide](https://developers.arcgis.com/ios/) | [API Reference](https://developers.arcgis.com/ios/api-reference/).
+* Got a question? Ask the community on our [forum](https://community.esri.com/community/developers/native-app-developers/arcgis-runtime-sdk-for-ios/).
 
 ## Issues
 

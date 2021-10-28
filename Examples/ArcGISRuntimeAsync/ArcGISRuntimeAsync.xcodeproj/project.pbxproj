@@ -1,0 +1,401 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 55;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		D993E4CA272B3B780060BE71 /* ArcGISAsyncAwait in Frameworks */ = {isa = PBXBuildFile; productRef = D993E4C9272B3B780060BE71 /* ArcGISAsyncAwait */; };
+		D99509A4272B4B960001DC79 /* ViewController+LoggingAndUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99509A3272B4B960001DC79 /* ViewController+LoggingAndUI.swift */; };
+		D9F9FE9126F411BA0083BE61 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9F9FE9026F411BA0083BE61 /* AppDelegate.swift */; };
+		D9F9FE9326F411BA0083BE61 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9F9FE9226F411BA0083BE61 /* SceneDelegate.swift */; };
+		D9F9FE9526F411BA0083BE61 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9F9FE9426F411BA0083BE61 /* ViewController.swift */; };
+		D9F9FE9826F411BA0083BE61 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D9F9FE9626F411BA0083BE61 /* Main.storyboard */; };
+		D9F9FE9A26F411BD0083BE61 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D9F9FE9926F411BD0083BE61 /* Assets.xcassets */; };
+		D9F9FE9D26F411BD0083BE61 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D9F9FE9B26F411BD0083BE61 /* LaunchScreen.storyboard */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		D993E4C7272B3B300060BE71 /* arcgis-runtime-ios-async-await */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "arcgis-runtime-ios-async-await"; path = ../..; sourceTree = "<group>"; };
+		D99509A3272B4B960001DC79 /* ViewController+LoggingAndUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+LoggingAndUI.swift"; sourceTree = "<group>"; };
+		D9F9FE8D26F411BA0083BE61 /* ArcGISRuntimeAsync.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ArcGISRuntimeAsync.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D9F9FE9026F411BA0083BE61 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		D9F9FE9226F411BA0083BE61 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		D9F9FE9426F411BA0083BE61 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		D9F9FE9726F411BA0083BE61 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		D9F9FE9926F411BD0083BE61 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		D9F9FE9C26F411BD0083BE61 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		D9F9FE9E26F411BD0083BE61 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D9F9FE8A26F411BA0083BE61 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D993E4CA272B3B780060BE71 /* ArcGISAsyncAwait in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D993E4C6272B3B300060BE71 /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				D993E4C7272B3B300060BE71 /* arcgis-runtime-ios-async-await */,
+			);
+			name = Packages;
+			sourceTree = "<group>";
+		};
+		D993E4C8272B3B780060BE71 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D9F9FE8426F411BA0083BE61 = {
+			isa = PBXGroup;
+			children = (
+				D993E4C6272B3B300060BE71 /* Packages */,
+				D9F9FE8F26F411BA0083BE61 /* ArcGISRuntimeAsync */,
+				D9F9FE8E26F411BA0083BE61 /* Products */,
+				D993E4C8272B3B780060BE71 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		D9F9FE8E26F411BA0083BE61 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D9F9FE8D26F411BA0083BE61 /* ArcGISRuntimeAsync.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D9F9FE8F26F411BA0083BE61 /* ArcGISRuntimeAsync */ = {
+			isa = PBXGroup;
+			children = (
+				D9F9FE9026F411BA0083BE61 /* AppDelegate.swift */,
+				D9F9FE9226F411BA0083BE61 /* SceneDelegate.swift */,
+				D9F9FE9426F411BA0083BE61 /* ViewController.swift */,
+				D99509A3272B4B960001DC79 /* ViewController+LoggingAndUI.swift */,
+				D9F9FE9626F411BA0083BE61 /* Main.storyboard */,
+				D9F9FE9926F411BD0083BE61 /* Assets.xcassets */,
+				D9F9FE9B26F411BD0083BE61 /* LaunchScreen.storyboard */,
+				D9F9FE9E26F411BD0083BE61 /* Info.plist */,
+			);
+			path = ArcGISRuntimeAsync;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D9F9FE8C26F411BA0083BE61 /* ArcGISRuntimeAsync */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D9F9FEA126F411BD0083BE61 /* Build configuration list for PBXNativeTarget "ArcGISRuntimeAsync" */;
+			buildPhases = (
+				D9F9FE8926F411BA0083BE61 /* Sources */,
+				D9F9FE8A26F411BA0083BE61 /* Frameworks */,
+				D9F9FE8B26F411BA0083BE61 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ArcGISRuntimeAsync;
+			packageProductDependencies = (
+				D993E4C9272B3B780060BE71 /* ArcGISAsyncAwait */,
+			);
+			productName = AsyncSPMTest;
+			productReference = D9F9FE8D26F411BA0083BE61 /* ArcGISRuntimeAsync.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D9F9FE8526F411BA0083BE61 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1300;
+				LastUpgradeCheck = 1300;
+				TargetAttributes = {
+					D9F9FE8C26F411BA0083BE61 = {
+						CreatedOnToolsVersion = 13.0;
+					};
+				};
+			};
+			buildConfigurationList = D9F9FE8826F411BA0083BE61 /* Build configuration list for PBXProject "ArcGISRuntimeAsync" */;
+			compatibilityVersion = "Xcode 13.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = D9F9FE8426F411BA0083BE61;
+			packageReferences = (
+			);
+			productRefGroup = D9F9FE8E26F411BA0083BE61 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D9F9FE8C26F411BA0083BE61 /* ArcGISRuntimeAsync */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D9F9FE8B26F411BA0083BE61 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D9F9FE9D26F411BD0083BE61 /* LaunchScreen.storyboard in Resources */,
+				D9F9FE9A26F411BD0083BE61 /* Assets.xcassets in Resources */,
+				D9F9FE9826F411BA0083BE61 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D9F9FE8926F411BA0083BE61 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D9F9FE9526F411BA0083BE61 /* ViewController.swift in Sources */,
+				D9F9FE9126F411BA0083BE61 /* AppDelegate.swift in Sources */,
+				D99509A4272B4B960001DC79 /* ViewController+LoggingAndUI.swift in Sources */,
+				D9F9FE9326F411BA0083BE61 /* SceneDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		D9F9FE9626F411BA0083BE61 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D9F9FE9726F411BA0083BE61 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		D9F9FE9B26F411BD0083BE61 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D9F9FE9C26F411BD0083BE61 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		D9F9FE9F26F411BD0083BE61 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		D9F9FEA026F411BD0083BE61 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		D9F9FEA226F411BD0083BE61 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ArcGISRuntimeAsync/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.esri.runtime.ios.examples.ArcGISRuntimeAsync;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		D9F9FEA326F411BD0083BE61 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ArcGISRuntimeAsync/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.esri.runtime.ios.examples.ArcGISRuntimeAsync;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D9F9FE8826F411BA0083BE61 /* Build configuration list for PBXProject "ArcGISRuntimeAsync" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D9F9FE9F26F411BD0083BE61 /* Debug */,
+				D9F9FEA026F411BD0083BE61 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D9F9FEA126F411BD0083BE61 /* Build configuration list for PBXNativeTarget "ArcGISRuntimeAsync" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D9F9FEA226F411BD0083BE61 /* Debug */,
+				D9F9FEA326F411BD0083BE61 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		D993E4C9272B3B780060BE71 /* ArcGISAsyncAwait */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ArcGISAsyncAwait;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = D9F9FE8526F411BA0083BE61 /* Project object */;
+}
