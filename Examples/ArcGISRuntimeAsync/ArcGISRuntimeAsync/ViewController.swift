@@ -22,7 +22,8 @@ class ViewController: UIViewController, UISearchBarDelegate {
     // MARK: General UI
     @IBOutlet weak var calculateRouteView: UIStackView!
     @IBOutlet weak var calculateRouteButton: UIButton!
-    @IBOutlet weak var cancelRouteCalculationView: UIStackView!
+    
+    @IBOutlet weak var cancelCalculationView: UIStackView!
     @IBOutlet weak var calculatingView: UIView!
     @IBOutlet weak var calculatingLabel: UILabel!
     
@@ -73,6 +74,7 @@ class ViewController: UIViewController, UISearchBarDelegate {
     ///
     /// This is set in the `getRoute()` method, and used in the `cancelRoute()` @IBAction.
     @MainActor var cancelableRouteCalculation: Task<AGSRouteResult, Error>? = nil
+    @MainActor var cancelableGenericCalculation: Task<Any, Error>? = nil
 
     // MARK: View setup
     override func viewDidLoad() {
@@ -130,15 +132,19 @@ extension ViewController {
         // Execute the job (async) printing feedback messages as they arrive.
         logMessage("Starting Estimate Export Tiles job.")
         
-        var lastPrintedMessageIndex = 0
-        let estimate = try await job.start(statusHandler: { [weak self] status in
-            for message in job.messages[lastPrintedMessageIndex...] {
-                self?.logMessage("-> \(message.message)")
-            }
-            lastPrintedMessageIndex = job.messages.count
-        })
+        cancelableGenericCalculation = Task { () -> AGSEstimateTileCacheSizeResult in
+            var lastPrintedMessageIndex = 0
+            let estimate = try await job.start(statusHandler: { [weak self] status in
+                for message in job.messages[lastPrintedMessageIndex...] {
+                    self?.logMessage("-> \(message.message)")
+                }
+                lastPrintedMessageIndex = job.messages.count
+            })
+            
+            return estimate
+        }
         
-        return estimate
+        return try await cancelableGenericCalculation!.value as! AGSEstimateTileCacheSizeResult
     }
     
     /// This method will calculate a route between two points.
@@ -178,7 +184,6 @@ extension ViewController {
 
 }
 
-
 // MARK: User Interaction
 extension ViewController {
     /// Geocode and estimate a tile cache
@@ -198,6 +203,9 @@ extension ViewController {
         Task {
             // Prepare the UI and clear previous results.
             showCalculatingView(message: "Geocoding…")
+
+            calculateRouteView.isHidden = true
+            cancelCalculationView.isHidden = false
 
             geocodeOverlay.graphics.removeAllObjects()
             
@@ -251,9 +259,15 @@ extension ViewController {
                 let formatter = ByteCountFormatter()
                 formatter.countStyle = .file
                 logMessage("Imagery tile cache estimate: \(estimate.tileCount) tiles, \(formatter.string(fromByteCount: Int64(estimate.fileSize)))")
+            } catch let error as CocoaError where error.code == CocoaError.userCancelled {
+                // Handle a cancelation. This is propagated as a userCancelled error.
+                showAlert(title: "Canceled", message: "The request was canceled by the user.")
             } catch {
                 showError(title: "Error geocoding/estimating", error: error)
             }
+
+            calculateRouteView.isHidden = false
+            cancelCalculationView.isHidden = true
 
             hideCalculatingView()
         }
@@ -303,7 +317,7 @@ extension ViewController {
             showCalculatingView(message: "Calculating route…")
 
             calculateRouteView.isHidden = true
-            cancelRouteCalculationView.isHidden = false
+            cancelCalculationView.isHidden = false
             
             routeResultOverlay.graphics.removeAllObjects()
             
@@ -345,7 +359,7 @@ extension ViewController {
             }
             
             calculateRouteView.isHidden = false
-            cancelRouteCalculationView.isHidden = true
+            cancelCalculationView.isHidden = true
 
             hideCalculatingView()
         }
@@ -353,9 +367,10 @@ extension ViewController {
     
     /// Cancels any currently executing route calculation using the async/await cancelable task pattern integrated with ArcGIS Runtime
     @IBAction func cancelRoute(_ sender: Any) {
-        logMessage("Canceling route calculation…")
+        logMessage("Canceling…")
         cancelableRouteCalculation?.cancel()
-        logMessage("Canceled route calculation.")
+        cancelableGenericCalculation?.cancel()
+        logMessage("Canceled.")
     }
     
 }

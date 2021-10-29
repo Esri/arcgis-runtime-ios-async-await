@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		D993E4CA272B3B780060BE71 /* ArcGISAsyncAwait in Frameworks */ = {isa = PBXBuildFile; productRef = D993E4C9272B3B780060BE71 /* ArcGISAsyncAwait */; };
 		D99509A4272B4B960001DC79 /* ViewController+LoggingAndUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99509A3272B4B960001DC79 /* ViewController+LoggingAndUI.swift */; };
+		D9E67D13272B75BC00FD7510 /* AsyncCancelableJobWrappers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E67D12272B75BC00FD7510 /* AsyncCancelableJobWrappers.swift */; };
 		D9F9FE9126F411BA0083BE61 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9F9FE9026F411BA0083BE61 /* AppDelegate.swift */; };
 		D9F9FE9326F411BA0083BE61 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9F9FE9226F411BA0083BE61 /* SceneDelegate.swift */; };
 		D9F9FE9526F411BA0083BE61 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9F9FE9426F411BA0083BE61 /* ViewController.swift */; };
@@ -20,6 +21,7 @@
 /* Begin PBXFileReference section */
 		D993E4C7272B3B300060BE71 /* arcgis-runtime-ios-async-await */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "arcgis-runtime-ios-async-await"; path = ../..; sourceTree = "<group>"; };
 		D99509A3272B4B960001DC79 /* ViewController+LoggingAndUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+LoggingAndUI.swift"; sourceTree = "<group>"; };
+		D9E67D12272B75BC00FD7510 /* AsyncCancelableJobWrappers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AsyncCancelableJobWrappers.swift; path = ../../../ManualImport/AsyncCancelableJobWrappers.swift; sourceTree = "<group>"; };
 		D9F9FE8D26F411BA0083BE61 /* ArcGISRuntimeAsync.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ArcGISRuntimeAsync.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9F9FE9026F411BA0083BE61 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D9F9FE9226F411BA0083BE61 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -82,6 +84,7 @@
 				D9F9FE9226F411BA0083BE61 /* SceneDelegate.swift */,
 				D9F9FE9426F411BA0083BE61 /* ViewController.swift */,
 				D99509A3272B4B960001DC79 /* ViewController+LoggingAndUI.swift */,
+				D9E67D12272B75BC00FD7510 /* AsyncCancelableJobWrappers.swift */,
 				D9F9FE9626F411BA0083BE61 /* Main.storyboard */,
 				D9F9FE9926F411BD0083BE61 /* Assets.xcassets */,
 				D9F9FE9B26F411BD0083BE61 /* LaunchScreen.storyboard */,
@@ -167,6 +170,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D9F9FE9526F411BA0083BE61 /* ViewController.swift in Sources */,
+				D9E67D13272B75BC00FD7510 /* AsyncCancelableJobWrappers.swift in Sources */,
 				D9F9FE9126F411BA0083BE61 /* AppDelegate.swift in Sources */,
 				D99509A4272B4B960001DC79 /* ViewController+LoggingAndUI.swift in Sources */,
 				D9F9FE9326F411BA0083BE61 /* SceneDelegate.swift in Sources */,
