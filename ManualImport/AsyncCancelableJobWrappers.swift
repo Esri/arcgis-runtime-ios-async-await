@@ -12,15 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-//
+// //////////////////////////////////////////////////////////////////////////////////////////
 // IMPORTANT USAGE NOTE:
 //
-// This file contains cancelable async/await wrappers for job execution.
-// Xcode's auto-generated async/await wrappers allow use of jobs, but do not provide cancel capability.
-//
 // To use these AGSJob subclass extensions, manually copy this Swift file into your project.
-// Otherwise Xcode will not prefer these method definitions over the automatically created wrappers.
-//
+// Otherwise Xcode will not prefer these method definitions to the automatically bridged
+// definitions created from the Objective-C SDK.
+// //////////////////////////////////////////////////////////////////////////////////////////
 
 import Foundation
 import ArcGIS
@@ -29,13 +27,9 @@ extension AGSJob {
     enum OperationError: Error {
         case nilResultNilError
     }
-}
 
-public extension AGSDownloadPreplannedOfflineMapJob {
-    func start(statusHandler: ((AGSJobStatus) -> Void)?) async throws -> AGSDownloadPreplannedOfflineMapResult {
-        guard self.status == .notStarted else {
-            fatalError("It is a programming error to start a running job.")
-        }
+    fileprivate func _start<T>(statusHandler: ((AGSJobStatus) -> Void)?) async throws -> T {
+        precondition(status == .notStarted, "It is a programming error to call start() on an already running job.")
 
         return try await withTaskCancellationHandler(handler: {
             self.progress.cancel()
@@ -51,6 +45,10 @@ public extension AGSDownloadPreplannedOfflineMapJob {
                     if let error = error {
                         continuation.resume(throwing: error)
                     } else if let result = result {
+                        guard let result = result as? T else {
+                            fatalError("The generic AGSJob _start() method has been incorrectly wrapped by the AGSJob subclass.")
+                            // Check the return type of the AGSJob subclass's wrapper against the result that subclass actually generates.
+                        }
                         continuation.resume(returning: result)
                     } else {
                         continuation.resume(throwing: OperationError.nilResultNilError)
@@ -58,254 +56,59 @@ public extension AGSDownloadPreplannedOfflineMapJob {
                 }
             }
         })
+    }
+}
 
+public extension AGSDownloadPreplannedOfflineMapJob {
+    func start(statusHandler: ((AGSJobStatus) -> Void)?) async throws -> AGSDownloadPreplannedOfflineMapResult {
+        return try await _start(statusHandler: statusHandler)
     }
 }
 
 public extension AGSEstimateTileCacheSizeJob {
     func start(statusHandler: ((AGSJobStatus) -> Void)?) async throws -> AGSEstimateTileCacheSizeResult {
-        guard self.status == .notStarted else {
-            fatalError("It is a programming error to start a running job.")
-        }
-
-        return try await withTaskCancellationHandler(handler: {
-            self.progress.cancel()
-        }, operation: {
-            try Task.checkCancellation()
-            return try await withUnsafeThrowingContinuation { continuation in
-                guard !Task.isCancelled else {
-                    continuation.resume(throwing: CancellationError())
-                    return
-                }
-                
-                self.start(statusHandler: statusHandler) { result, error in
-                    if let error = error {
-                        continuation.resume(throwing: error)
-                    } else if let result = result {
-                        continuation.resume(returning: result)
-                    } else {
-                        continuation.resume(throwing: OperationError.nilResultNilError)
-                    }
-                }
-            }
-        })
-
+        return try await _start(statusHandler: statusHandler)
     }
 }
 
 public extension AGSExportTileCacheJob {
     func start(statusHandler: ((AGSJobStatus) -> Void)?) async throws -> AGSTileCache {
-        guard self.status == .notStarted else {
-            fatalError("It is a programming error to start a running job.")
-        }
-
-        return try await withTaskCancellationHandler(handler: {
-            self.progress.cancel()
-        }, operation: {
-            try Task.checkCancellation()
-            return try await withUnsafeThrowingContinuation { continuation in
-                guard !Task.isCancelled else {
-                    continuation.resume(throwing: CancellationError())
-                    return
-                }
-                
-                self.start(statusHandler: statusHandler) { result, error in
-                    if let error = error {
-                        continuation.resume(throwing: error)
-                    } else if let result = result {
-                        continuation.resume(returning: result)
-                    } else {
-                        continuation.resume(throwing: OperationError.nilResultNilError)
-                    }
-                }
-            }
-        })
-
+        return try await _start(statusHandler: statusHandler)
     }
 }
 
 public extension AGSExportVectorTilesJob {
     func start(statusHandler: ((AGSJobStatus) -> Void)?) async throws -> AGSExportVectorTilesResult {
-        guard self.status == .notStarted else {
-            fatalError("It is a programming error to start a running job.")
-        }
-
-        return try await withTaskCancellationHandler(handler: {
-            self.progress.cancel()
-        }, operation: {
-            try Task.checkCancellation()
-            return try await withUnsafeThrowingContinuation { continuation in
-                guard !Task.isCancelled else {
-                    continuation.resume(throwing: CancellationError())
-                    return
-                }
-                
-                self.start(statusHandler: statusHandler) { result, error in
-                    if let error = error {
-                        continuation.resume(throwing: error)
-                    } else if let result = result {
-                        continuation.resume(returning: result)
-                    } else {
-                        continuation.resume(throwing: OperationError.nilResultNilError)
-                    }
-                }
-            }
-        })
-
+        return try await _start(statusHandler: statusHandler)
     }
 }
 
 public extension AGSGenerateGeodatabaseJob {
     func start(statusHandler: ((AGSJobStatus) -> Void)?) async throws -> AGSGeodatabase {
-        guard self.status == .notStarted else {
-            fatalError("It is a programming error to start a running job.")
-        }
-
-        return try await withTaskCancellationHandler(handler: {
-            self.progress.cancel()
-        }, operation: {
-            try Task.checkCancellation()
-            return try await withUnsafeThrowingContinuation { continuation in
-                guard !Task.isCancelled else {
-                    continuation.resume(throwing: CancellationError())
-                    return
-                }
-                
-                self.start(statusHandler: statusHandler) { result, error in
-                    if let error = error {
-                        continuation.resume(throwing: error)
-                    } else if let result = result {
-                        continuation.resume(returning: result)
-                    } else {
-                        continuation.resume(throwing: OperationError.nilResultNilError)
-                    }
-                }
-            }
-        })
-
+        return try await _start(statusHandler: statusHandler)
     }
 }
 
 public extension AGSGenerateOfflineMapJob {
     func start(statusHandler: ((AGSJobStatus) -> Void)?) async throws -> AGSGenerateOfflineMapResult {
-        guard self.status == .notStarted else {
-            fatalError("It is a programming error to start a running job.")
-        }
-
-        return try await withTaskCancellationHandler(handler: {
-            self.progress.cancel()
-        }, operation: {
-            try Task.checkCancellation()
-            return try await withUnsafeThrowingContinuation { continuation in
-                guard !Task.isCancelled else {
-                    continuation.resume(throwing: CancellationError())
-                    return
-                }
-                
-                self.start(statusHandler: statusHandler) { result, error in
-                    if let error = error {
-                        continuation.resume(throwing: error)
-                    } else if let result = result {
-                        continuation.resume(returning: result)
-                    } else {
-                        continuation.resume(throwing: OperationError.nilResultNilError)
-                    }
-                }
-            }
-        })
-
+        return try await _start(statusHandler: statusHandler)
     }
 }
 
 public extension AGSGeoprocessingJob {
     func start(statusHandler: ((AGSJobStatus) -> Void)?) async throws -> AGSGeoprocessingResult {
-        guard self.status == .notStarted else {
-            fatalError("It is a programming error to start a running job.")
-        }
-
-        return try await withTaskCancellationHandler(handler: {
-            self.progress.cancel()
-        }, operation: {
-            try Task.checkCancellation()
-            return try await withUnsafeThrowingContinuation { continuation in
-                guard !Task.isCancelled else {
-                    continuation.resume(throwing: CancellationError())
-                    return
-                }
-                
-                self.start(statusHandler: statusHandler) { result, error in
-                    if let error = error {
-                        continuation.resume(throwing: error)
-                    } else if let result = result {
-                        continuation.resume(returning: result)
-                    } else {
-                        continuation.resume(throwing: OperationError.nilResultNilError)
-                    }
-                }
-            }
-        })
-
+        return try await _start(statusHandler: statusHandler)
     }
 }
 
 public extension AGSOfflineMapSyncJob {
     func start(statusHandler: ((AGSJobStatus) -> Void)?) async throws -> AGSOfflineMapSyncResult {
-        guard self.status == .notStarted else {
-            fatalError("It is a programming error to start a running job.")
-        }
-
-        return try await withTaskCancellationHandler(handler: {
-            self.progress.cancel()
-        }, operation: {
-            try Task.checkCancellation()
-            return try await withUnsafeThrowingContinuation { continuation in
-                guard !Task.isCancelled else {
-                    continuation.resume(throwing: CancellationError())
-                    return
-                }
-                
-                self.start(statusHandler: statusHandler) { result, error in
-                    if let error = error {
-                        continuation.resume(throwing: error)
-                    } else if let result = result {
-                        continuation.resume(returning: result)
-                    } else {
-                        continuation.resume(throwing: OperationError.nilResultNilError)
-                    }
-                }
-            }
-        })
-
+        return try await _start(statusHandler: statusHandler)
     }
 }
 
 public extension AGSSyncGeodatabaseJob {
     func start(statusHandler: ((AGSJobStatus) -> Void)?) async throws -> [AGSSyncLayerResult] {
-        guard self.status == .notStarted else {
-            fatalError("It is a programming error to start a running job.")
-        }
-
-        return try await withTaskCancellationHandler(handler: {
-            self.progress.cancel()
-        }, operation: {
-            try Task.checkCancellation()
-            return try await withUnsafeThrowingContinuation { continuation in
-                guard !Task.isCancelled else {
-                    continuation.resume(throwing: CancellationError())
-                    return
-                }
-                
-                self.start(statusHandler: statusHandler) { result, error in
-                    if let error = error {
-                        continuation.resume(throwing: error)
-                    } else if let result = result {
-                        continuation.resume(returning: result)
-                    } else {
-                        continuation.resume(throwing: OperationError.nilResultNilError)
-                    }
-                }
-            }
-        })
-
+        return try await _start(statusHandler: statusHandler)
     }
 }

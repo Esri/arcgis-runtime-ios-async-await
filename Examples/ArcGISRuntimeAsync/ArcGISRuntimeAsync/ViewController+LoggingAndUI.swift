@@ -29,8 +29,10 @@ extension ViewController {
         clearLog()
     }
     
-    @MainActor internal func showCalculatingView(message: String, withProgress: Bool = false) {
+    @MainActor
+    internal func showCalculatingView(message: String, withProgress: Bool = false) async {
         calculateRouteButton.isEnabled = false
+        cancelCalculationButton.isEnabled = true
         calculatingView.isHidden = false
         calculatingLabel.text = message
         activityIndicator.startAnimating()
@@ -42,15 +44,19 @@ extension ViewController {
         logSection(message)
     }
     
-    @MainActor internal func hideCalculatingView() {
+    @MainActor
+    internal func hideCalculatingView() async {
         calculateRouteButton.isEnabled = true
         activityIndicator.stopAnimating()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) { [weak self] in
-            self?.calculatingView.isHidden = true
-            self?.progressView.isHidden = true
-            self?.progressView.progress = 0
-            self?.progressView.isHidden = true
-        }
+        cancelCalculationButton.isEnabled = false
+        
+        // Pause for 2.5 seconds before hiding the view.
+        try? await Task.sleep(nanoseconds: 2_500_000_000)
+
+        calculatingView.isHidden = true
+        progressView.isHidden = true
+        progressView.progress = 0
+        progressView.isHidden = true
     }
 }
 
@@ -102,8 +108,10 @@ extension ViewController {
             alert.dismiss(animated: true, completion: nil)
         }))
         
-        DispatchQueue.main.async {
-            self.present(alert, animated: true, completion: nil)
+        Task {
+            await MainActor.run {
+                present(alert, animated: true, completion: nil)
+            }
         }
         
         logMessage("Alert (\(title)): \(message)")

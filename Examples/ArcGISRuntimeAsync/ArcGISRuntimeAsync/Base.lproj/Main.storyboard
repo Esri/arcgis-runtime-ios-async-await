@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -10,37 +11,37 @@
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="AsyncSPMTest" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="ArcGISRuntimeAsync" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Ded-8a-vW1">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                                 <subviews>
                                     <searchBar contentMode="redraw" placeholder="Enter a place name or address" translatesAutoresizingMaskIntoConstraints="NO" id="htH-rY-qQn">
-                                        <rect key="frame" x="0.0" y="0.0" width="600" height="51"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="269"/>
                                         <textInputTraits key="textInputTraits"/>
                                         <connections>
                                             <outlet property="delegate" destination="BYZ-38-t0r" id="o2A-3A-4pm"/>
                                         </connections>
                                     </searchBar>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="j6z-DS-7qa" customClass="AGSMapView">
-                                        <rect key="frame" x="0.0" y="61" width="600" height="349.5"/>
+                                        <rect key="frame" x="0.0" y="279" width="414" height="349.5"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     </view>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="n3F-lq-g3F">
-                                        <rect key="frame" x="0.0" y="420.5" width="600" height="40"/>
+                                        <rect key="frame" x="0.0" y="638.5" width="414" height="40"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="yKy-lQ-PxJ">
-                                                <rect key="frame" x="8" y="0.0" width="584" height="40"/>
+                                                <rect key="frame" x="8" y="0.0" width="398" height="40"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0uZ-JX-KiZ">
-                                                        <rect key="frame" x="0.0" y="0.0" width="584" height="40"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="398" height="40"/>
                                                         <state key="normal" title="Button"/>
                                                         <buttonConfiguration key="configuration" style="filled" title="Calculate Route"/>
                                                         <connections>
-                                                            <action selector="calculateRoute:" destination="BYZ-38-t0r" eventType="touchUpInside" id="1cU-P9-C8v"/>
+                                                            <action selector="calculateRouteButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="EPW-55-HnJ"/>
                                                         </connections>
                                                     </button>
                                                 </subviews>
@@ -48,36 +49,20 @@
                                                     <constraint firstAttribute="height" constant="40" id="6lM-J7-eUj"/>
                                                 </constraints>
                                             </stackView>
-                                            <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="amE-7Q-vBG">
-                                                <rect key="frame" x="8" y="0.0" width="584" height="40"/>
-                                                <subviews>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qd3-dB-TsP">
-                                                        <rect key="frame" x="0.0" y="0.0" width="584" height="40"/>
-                                                        <state key="normal" title="Button"/>
-                                                        <buttonConfiguration key="configuration" style="filled" title="Cancel"/>
-                                                        <connections>
-                                                            <action selector="cancelRoute:" destination="BYZ-38-t0r" eventType="touchUpInside" id="xTF-P8-QuT"/>
-                                                        </connections>
-                                                    </button>
-                                                </subviews>
-                                            </stackView>
                                         </subviews>
-                                        <constraints>
-                                            <constraint firstItem="Qd3-dB-TsP" firstAttribute="height" secondItem="0uZ-JX-KiZ" secondAttribute="height" id="UfZ-Xe-dFb"/>
-                                        </constraints>
                                         <edgeInsets key="layoutMargins" top="0.0" left="8" bottom="0.0" right="8"/>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="hrp-KZ-3Ok">
-                                        <rect key="frame" x="0.0" y="470.5" width="600" height="129.5"/>
+                                        <rect key="frame" x="0.0" y="688.5" width="414" height="129.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Log messages" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7BV-jU-sRj">
-                                                <rect key="frame" x="8" y="0.0" width="584" height="21.5"/>
+                                                <rect key="frame" x="8" y="0.0" width="398" height="21.5"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" directionalLockEnabled="YES" pagingEnabled="YES" editable="NO" text="Message Logs" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Tob-1z-0p1">
-                                                <rect key="frame" x="8" y="29.5" width="584" height="100"/>
+                                                <rect key="frame" x="8" y="29.5" width="398" height="100"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="100" id="uSu-ue-OhE"/>
@@ -92,53 +77,72 @@
                                 </subviews>
                             </stackView>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="weL-Nr-LYy">
-                                <rect key="frame" x="60" y="320.5" width="480" height="50"/>
+                                <rect key="frame" x="41.5" y="535.5" width="331" height="97"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="FsB-0y-eac">
-                                        <rect key="frame" x="166" y="5" width="148.5" height="40"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="jbs-Ne-Ksm">
+                                        <rect key="frame" x="20" y="8" width="291" height="81"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Calculating…" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="za6-qH-yw2">
-                                                <rect key="frame" x="0.0" y="0.0" width="98.5" height="40"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g2Z-JM-7gE">
-                                                <rect key="frame" x="108.5" y="0.0" width="40" height="40"/>
+                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="FsB-0y-eac">
+                                                <rect key="frame" x="0.0" y="0.0" width="291" height="40"/>
                                                 <subviews>
-                                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="DEo-Yd-pcG">
-                                                        <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Calculating…" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.75" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="za6-qH-yw2">
+                                                        <rect key="frame" x="0.0" y="0.0" width="241" height="40"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g2Z-JM-7gE">
+                                                        <rect key="frame" x="251" y="0.0" width="40" height="40"/>
+                                                        <subviews>
+                                                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="DEo-Yd-pcG">
+                                                                <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="width" secondItem="DEo-Yd-pcG" secondAttribute="height" multiplier="1:1" id="TAw-mB-Egn"/>
+                                                                    <constraint firstAttribute="height" constant="40" id="nXf-A2-s1y"/>
+                                                                </constraints>
+                                                            </activityIndicatorView>
+                                                        </subviews>
+                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="width" secondItem="DEo-Yd-pcG" secondAttribute="height" multiplier="1:1" id="TAw-mB-Egn"/>
-                                                            <constraint firstAttribute="height" constant="40" id="nXf-A2-s1y"/>
+                                                            <constraint firstItem="DEo-Yd-pcG" firstAttribute="top" secondItem="g2Z-JM-7gE" secondAttribute="top" id="Ahc-HW-Tyf"/>
+                                                            <constraint firstAttribute="bottom" secondItem="DEo-Yd-pcG" secondAttribute="bottom" id="Oto-bE-0Rt"/>
+                                                            <constraint firstItem="DEo-Yd-pcG" firstAttribute="leading" secondItem="g2Z-JM-7gE" secondAttribute="leading" id="dlX-Fz-XmH"/>
+                                                            <constraint firstAttribute="trailing" secondItem="DEo-Yd-pcG" secondAttribute="trailing" id="ygg-cd-SY2"/>
                                                         </constraints>
-                                                    </activityIndicatorView>
+                                                    </view>
                                                 </subviews>
-                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                            </stackView>
+                                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1Vn-U4-8L9">
+                                                <rect key="frame" x="0.0" y="44" width="291" height="2"/>
                                                 <constraints>
-                                                    <constraint firstItem="DEo-Yd-pcG" firstAttribute="top" secondItem="g2Z-JM-7gE" secondAttribute="top" id="Ahc-HW-Tyf"/>
-                                                    <constraint firstAttribute="bottom" secondItem="DEo-Yd-pcG" secondAttribute="bottom" id="Oto-bE-0Rt"/>
-                                                    <constraint firstItem="DEo-Yd-pcG" firstAttribute="leading" secondItem="g2Z-JM-7gE" secondAttribute="leading" id="dlX-Fz-XmH"/>
-                                                    <constraint firstAttribute="trailing" secondItem="DEo-Yd-pcG" secondAttribute="trailing" id="ygg-cd-SY2"/>
+                                                    <constraint firstAttribute="height" constant="2" id="mvF-j0-ghR"/>
                                                 </constraints>
-                                            </view>
+                                            </progressView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="amE-7Q-vBG">
+                                                <rect key="frame" x="0.0" y="50" width="291" height="31"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qd3-dB-TsP">
+                                                        <rect key="frame" x="0.0" y="0.0" width="291" height="31"/>
+                                                        <state key="normal" title="Button"/>
+                                                        <buttonConfiguration key="configuration" style="filled" title="Cancel"/>
+                                                        <connections>
+                                                            <action selector="cancelRouteButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="xXK-xR-fW3"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                            </stackView>
                                         </subviews>
-                                    </stackView>
-                                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1Vn-U4-8L9">
-                                        <rect key="frame" x="166" y="45" width="148.5" height="2"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="2" id="mvF-j0-ghR"/>
+                                            <constraint firstItem="1Vn-U4-8L9" firstAttribute="width" secondItem="FsB-0y-eac" secondAttribute="width" id="gaR-5f-2Bx"/>
                                         </constraints>
-                                    </progressView>
+                                    </stackView>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstItem="FsB-0y-eac" firstAttribute="bottom" secondItem="1Vn-U4-8L9" secondAttribute="top" id="MmZ-lB-V9L"/>
-                                    <constraint firstItem="FsB-0y-eac" firstAttribute="centerY" secondItem="weL-Nr-LYy" secondAttribute="centerY" id="Qhz-ZK-geo"/>
-                                    <constraint firstItem="1Vn-U4-8L9" firstAttribute="centerX" secondItem="FsB-0y-eac" secondAttribute="centerX" id="YJZ-D0-YKf"/>
-                                    <constraint firstItem="1Vn-U4-8L9" firstAttribute="width" secondItem="FsB-0y-eac" secondAttribute="width" id="pVf-YN-Wdr"/>
-                                    <constraint firstItem="FsB-0y-eac" firstAttribute="centerX" secondItem="weL-Nr-LYy" secondAttribute="centerX" id="qiH-zS-CQD"/>
-                                    <constraint firstAttribute="height" constant="50" id="tJB-U4-5LJ"/>
+                                    <constraint firstAttribute="bottom" secondItem="jbs-Ne-Ksm" secondAttribute="bottom" constant="8" id="JaX-Wv-zWa"/>
+                                    <constraint firstItem="jbs-Ne-Ksm" firstAttribute="leading" secondItem="weL-Nr-LYy" secondAttribute="leading" constant="20" id="pnG-hL-F9E"/>
+                                    <constraint firstItem="jbs-Ne-Ksm" firstAttribute="top" secondItem="weL-Nr-LYy" secondAttribute="top" constant="8" id="qPJ-M1-64m"/>
+                                    <constraint firstAttribute="trailing" secondItem="jbs-Ne-Ksm" secondAttribute="trailing" constant="20" id="uCQ-sq-L1G"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -160,6 +164,7 @@
                         <outlet property="calculateRouteView" destination="yKy-lQ-PxJ" id="PUm-k6-2kf"/>
                         <outlet property="calculatingLabel" destination="za6-qH-yw2" id="zd4-Zf-OcE"/>
                         <outlet property="calculatingView" destination="weL-Nr-LYy" id="Rom-YC-xdW"/>
+                        <outlet property="cancelCalculationButton" destination="Qd3-dB-TsP" id="V8X-4h-6yN"/>
                         <outlet property="cancelCalculationView" destination="amE-7Q-vBG" id="mcm-0S-o4X"/>
                         <outlet property="logTextView" destination="Tob-1z-0p1" id="dvi-6L-Zoc"/>
                         <outlet property="mapView" destination="j6z-DS-7qa" id="x7V-Dc-M1v"/>

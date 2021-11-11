@@ -24,6 +24,7 @@ class ViewController: UIViewController, UISearchBarDelegate {
     @IBOutlet weak var calculateRouteButton: UIButton!
     
     @IBOutlet weak var cancelCalculationView: UIStackView!
+    @IBOutlet weak var cancelCalculationButton: UIButton!
     @IBOutlet weak var calculatingView: UIView!
     @IBOutlet weak var calculatingLabel: UILabel!
     
@@ -31,20 +32,23 @@ class ViewController: UIViewController, UISearchBarDelegate {
     
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var progressView: UIProgressView!
-
-    // MARK: Mapping UI
+    
+    // MARK: Map UI
     @IBOutlet weak var mapView: AGSMapView! {
         didSet {
             // To use a map, set the API Key. See AppDelegate.swift.
             let map = AGSMap(basemapStyle: .arcGISNavigation)
             
+            // Display the map in the map view
             mapView.map = map
+            
+            // Add graphics overlays to the map view
             mapView.graphicsOverlays.add(routeResultOverlay)
             mapView.graphicsOverlays.add(geocodeOverlay)
-
+            
             Task {
                 do {
-                    // Explicitly load the map's metadata
+                    // Explicitly load the map's metadata to read its spatial reference
                     try await map.load()
                     logMessage("Map is loaded")
                     
@@ -61,7 +65,7 @@ class ViewController: UIViewController, UISearchBarDelegate {
     // MARK: Map view overlays
     let routeResultOverlay = AGSGraphicsOverlay()
     let geocodeOverlay = AGSGraphicsOverlay()
-
+    
     // MARK: Platform service tasks
     let locatorTask = AGSLocatorTask(url: URL(string: "https://geocode-api.arcgis.com/arcgis/rest/services/World/GeocodeServer")!)
     let routeTask = AGSRouteTask(url: URL(string: "https://route-api.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World")!)
@@ -75,17 +79,17 @@ class ViewController: UIViewController, UISearchBarDelegate {
     /// This is set in the `getRoute()` method, and used in the `cancelRoute()` @IBAction.
     @MainActor var cancelableRouteCalculation: Task<AGSRouteResult, Error>? = nil
     @MainActor var cancelableGenericCalculation: Task<Any, Error>? = nil
-
+    
     // MARK: View setup
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
         setupUI()
-
+        
         Task {
-            // Do this to avoid any delay loading metadata when doing our first geocode later.
             do {
+                // Load metadata now to avoid any delay when doing our first geocode later.
                 try await locatorTask.load()
                 logMessage("Locator Task ready")
             } catch {
@@ -93,12 +97,13 @@ class ViewController: UIViewController, UISearchBarDelegate {
             }
         }
     }
-
+    
 }
 
 
-// MARK: Async runtime operations
+// MARK: ArcGIS Runtime async/await calls
 extension ViewController {
+    
     /// Get a geocode result for given search text
     /// - Parameter searchText: The text to search for (e.g. "NYC" or "New York, NY", or "Eiffel Tower"
     /// - Returns: An AGSGeocodeResult that provides detailed information about the best result found for the search text.
@@ -124,9 +129,9 @@ extension ViewController {
         let parameters = try await exportTileCacheTask.exportTileCacheParameters(withAreaOfInterest: areaOfInterest, minScale: 100000, maxScale: 1)
         
         let job = exportTileCacheTask.estimateTileCacheSizeJob(with: parameters)
-    
-        DispatchQueue.main.async { [weak self] in
-            self?.progressView.observedProgress = job.progress
+        
+        await MainActor.run {
+            progressView.observedProgress = job.progress
         }
         
         // Execute the job (async) printing feedback messages as they arrive.
@@ -155,7 +160,7 @@ extension ViewController {
     ///   - finish: The end of route.
     /// - Returns: A route result.
     private func calculateRoute(from start: AGSStop, to finish: AGSStop) async throws -> AGSRouteResult {
-
+        
         // Store the cancelable task so the Cancel button can cancel it.
         cancelableRouteCalculation = Task { () -> AGSRouteResult in
             let startTime = Date()
@@ -181,174 +186,47 @@ extension ViewController {
         
         return try await cancelableRouteCalculation!.value
     }
-
+    
 }
 
-// MARK: User Interaction
+// MARK: UI interaction (IBActions etc.)
 extension ViewController {
-    /// Geocode and estimate a tile cache
-    ///
-    /// This method will initiate a sequence of async ArcGIS Runtime operations and demonstrates:
-    /// * Geocoding
-    /// * Estimating a tile package for download
-    /// * Zooming the map view without waiting for the zoom to complete before continuing
-    /// * Referencing graphics around an async/await call (this would be painful with completion handlers)
-    /// * Benefitting from the sequential nature of async/await code to simplify UI updates around other operations
+    
+    /// Geocode and estimate a tile cache, handling any cancel requests from the user.
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchText = searchBar.text,
               !searchText.isEmpty else { return }
         
         searchBar.resignFirstResponder()
-
+        
         Task {
-            // Prepare the UI and clear previous results.
-            showCalculatingView(message: "Geocoding…")
-
-            calculateRouteView.isHidden = true
-            cancelCalculationView.isHidden = false
-
-            geocodeOverlay.graphics.removeAllObjects()
+            await showCalculatingView(message: "Geocoding…")
             
             do {
-                logMessage("Searching for \"\(searchText)\"")
-                let geocodeResult = try await geocode(searchText: searchText)
                 
-                guard let location = geocodeResult?.displayLocation,
-                      let areaOfInterest = AGSGeometryEngine.geodeticBufferGeometry(
-                        location,
-                        distance: 500, distanceUnit: .meters(),
-                        maxDeviation: Double.nan, curveType: .geodesic)
-                else { return }
+                try await geocodeAndDisplayResult(searchText: searchText)
                 
-                // Show the geocode location, and a 500m area around it.
-                let areaGraphic = AGSGraphic(geometry: areaOfInterest, symbol: AGSSimpleFillSymbol(style: .diagonalCross, color: .orange.withAlphaComponent(0.5), outline: AGSSimpleLineSymbol(style: .solid, color: .orange.withAlphaComponent(0.3), width: 2)), attributes: nil)
-
-                geocodeOverlay.graphics.addObjects(from: [
-                    areaGraphic,
-                    AGSGraphic(geometry: location, symbol: AGSSimpleMarkerSymbol(style: .circle, color: .blue, size: 10), attributes: nil)
-                ])
-                
-                // Zoom the map view in its own Task because we don't want to wait for the zoom animations
-                // to complete before we start estimating tile sizes.
-                Task {
-                    await mapView.setViewpointGeometry(geocodeResult?.extent ?? areaOfInterest)
-                    // Focus in on the area we're estimating tiles for.
-                    await mapView.setViewpoint(
-                        AGSViewpoint(targetExtent: areaOfInterest.extent.toBuilder().expand(byFactor: 1.5).toGeometry()),
-                        duration: 3,
-                        curve: .easeInOutCubic
-                    )
-                }
-
-                // Estimate the size of the tile package needed to download tiles for the 500m buffer.
-                // Note, we don't actually download them - we'll just see how large the package would be.
-                showCalculatingView(message: "Estimating tiles to download…", withProgress: true)
-                
-                let estimate = try await estimateTiles(areaOfInterest: areaOfInterest)
-                
-                logMessage("Estimate Export Tiles job completed.")
-                progressView.progress = 1
-                
-                if let areaFill = areaGraphic.symbol as? AGSSimpleFillSymbol,
-                   let areaOutline = areaFill.outline as? AGSSimpleLineSymbol {
-                    areaFill.style = .solid
-                    areaOutline.width = 5
-                    areaOutline.color = areaOutline.color.withAlphaComponent(1)
-                }
-                
-                let formatter = ByteCountFormatter()
-                formatter.countStyle = .file
-                logMessage("Imagery tile cache estimate: \(estimate.tileCount) tiles, \(formatter.string(fromByteCount: Int64(estimate.fileSize)))")
             } catch let error as CocoaError where error.code == CocoaError.userCancelled {
                 // Handle a cancelation. This is propagated as a userCancelled error.
                 showAlert(title: "Canceled", message: "The request was canceled by the user.")
             } catch {
                 showError(title: "Error geocoding/estimating", error: error)
             }
-
-            calculateRouteView.isHidden = false
-            cancelCalculationView.isHidden = true
-
-            hideCalculatingView()
+            
+            await hideCalculatingView()
         }
     }
+    
+    /// Calculate a route from the west coast of the US to the east coast, handling any cancel requests from the user.
+    @IBAction func calculateRouteButtonTapped(_ sender: Any) {
         
-    /// This method will calculate a route from the west coast of the US to the east coast.
-    ///
-    /// This calculation could take about 5-8 seconds, and can be canceled, demonstrating how async cancelation is supported by the ArcGIS Runtime async wrappers.
-    ///
-    /// The end result is displayed on the map.
-    ///
-    /// The method demonstrates:
-    /// * Using async/await with ArcGIS Runtime
-    /// * Handling a cancel event (propagated through Runtime as a Cocoa.userCanceled Error)
-    /// * Benefitting from the sequential nature of async/await code to simplify UI updates around other operations
-    @IBAction func calculateRoute(_ sender: Any) {
-        // Calculate a route from west coast to east coast.
-        let leviStadium: AGSStop = {
-            let stop = AGSStop(point: AGSPointMakeWGS84(37.403190166819925, -121.96976999999998))
-            stop.name = "Levi Stadium"
-            return stop
-        }()
-        let gilletteStadium: AGSStop = {
-            let stop = AGSStop(point: AGSPointMakeWGS84(42.090960788263, -71.26438999999993))
-            stop.name = "Gillette Stadium"
-            return stop
-        }()
-        
-        let routeDistanceFormatter: LengthFormatter = {
-            let f = LengthFormatter()
-            f.unitStyle = .long
-            f.isForPersonHeightUse = false
-            f.numberFormatter.maximumFractionDigits = 2
-            return f
-        }()
-        
-        let routeDurationFormatter: DateComponentsFormatter = {
-            let f = DateComponentsFormatter()
-            f.includesApproximationPhrase = true
-            f.unitsStyle = .full
-            f.includesApproximationPhrase = true
-            f.allowedUnits = [.day, .hour, .minute]
-            return f
-        }()
-
         Task {
-            showCalculatingView(message: "Calculating route…")
 
-            calculateRouteView.isHidden = true
-            cancelCalculationView.isHidden = false
-            
-            routeResultOverlay.graphics.removeAllObjects()
+            await showCalculatingView(message: "Calculating route…")
             
             do {
-                
-                // Calculate the route asynchronously. This can be canceled from the `cancelRoute()` @IBAction.
                 // Cancelations are propagated as CocoaError.userCancelled errors. See the catch statement below.
-                guard let route = try await calculateRoute(from: leviStadium, to: gilletteStadium).routes.first,
-                      let routeGeometry = route.routeGeometry else {
-                          showAlert(title: "No route", message: "No valid route could be calculated.")
-                          return
-                      }
-                
-                // Display the route in the map view.
-                routeResultOverlay.graphics.add(AGSGraphic(
-                    geometry: routeGeometry,
-                    symbol: AGSSimpleLineSymbol(style: .solid, color: .red, width: 2)
-                ))
-
-                // Zoom the map view to the route.
-                Task {
-                    await mapView.setViewpoint(
-                        AGSViewpoint(targetExtent: routeGeometry.extent.toBuilder().expand(byFactor: 1.1).toGeometry()),
-                        duration: 2,
-                        curve: .easeInOutCubic
-                    )
-                }
-
-                // And log some details about the route.
-                logMessage("Got a route: \(route.routeName)")
-                logMessage("\(routeDistanceFormatter.string(fromMeters: route.totalLength)) (\(routeDurationFormatter.string(from: route.totalTime * 60)!.lowercased()))")
+                try await calculateAndDisplayRoute()
                 
             } catch let error as CocoaError where error.code == CocoaError.userCancelled {
                 // Handle a cancelation. This is propagated as a userCancelled error.
@@ -358,19 +236,167 @@ extension ViewController {
                 showError(title: "Error calculating route", error: error)
             }
             
-            calculateRouteView.isHidden = false
-            cancelCalculationView.isHidden = true
-
-            hideCalculatingView()
+            await hideCalculatingView()
+            
         }
+        
     }
     
     /// Cancels any currently executing route calculation using the async/await cancelable task pattern integrated with ArcGIS Runtime
-    @IBAction func cancelRoute(_ sender: Any) {
+    @IBAction func cancelRouteButtonTapped(_ sender: Any) {
         logMessage("Canceling…")
         cancelableRouteCalculation?.cancel()
         cancelableGenericCalculation?.cancel()
         logMessage("Canceled.")
     }
     
+}
+
+
+// MARK: Operation control flow
+extension ViewController {
+    
+    /// Geocode some search text, then calculate a 500m buffer around it and estimate how many Imager tiles would be needed to take that are offline.
+    /// Update the map view with Graphics representing the result, and log progress.
+    ///
+    /// This method will initiate a sequence of async ArcGIS Runtime operations and demonstrates:
+    /// * Geocoding using the Task pattern
+    /// * Estimating a tile package for download using the Job pattern
+    /// * Zooming the map view without waiting for the zoom to complete before continuing
+    /// * Referencing and updating graphics around an async/await call
+    /// * Benefitting from the sequential nature of async/await code to simplify UI updates around other operations
+    ///
+    /// - Parameter searchText: Some search text, as entered in the UISearchBar. For example: NYC
+    func geocodeAndDisplayResult(searchText: String) async throws {
+        
+        logMessage("Searching for \"\(searchText)\"")
+
+        geocodeOverlay.graphics.removeAllObjects()
+
+        let geocodeResult = try await geocode(searchText: searchText)
+        
+        guard let location = geocodeResult?.displayLocation,
+              let areaOfInterest = AGSGeometryEngine.geodeticBufferGeometry(
+                location,
+                distance: 500, distanceUnit: .meters(),
+                maxDeviation: Double.nan, curveType: .geodesic)
+        else { return }
+        
+        // Show the geocode location, and a 500m area around it.
+        let locationGraphic = AGSGraphic(
+            geometry: location,
+            symbol: AGSSimpleMarkerSymbol(style: .circle, color: .blue, size: 10)
+        )
+        
+        let areaGraphic = AGSGraphic(
+            geometry: areaOfInterest,
+            symbol: AGSSimpleFillSymbol(
+                style: .diagonalCross,
+                color: .orange.withAlphaComponent(0.5),
+                outline: AGSSimpleLineSymbol(style: .solid, color: .orange.withAlphaComponent(0.3), width: 2))
+        )
+        
+        geocodeOverlay.graphics.addObjects(from: [areaGraphic, locationGraphic])
+        
+        // Zoom the map view in its own Task because we don't want to wait for the zoom animations
+        // to complete before we start estimating tile sizes.
+        Task {
+            await mapView.setViewpointGeometry(geocodeResult?.extent ?? areaOfInterest)
+            // Focus in on the area we're estimating tiles for.
+            await mapView.setViewpoint(
+                AGSViewpoint(targetExtent: areaOfInterest.extent.toBuilder().expand(byFactor: 1.5).toGeometry()),
+                duration: 3,
+                curve: .easeInOutCubic
+            )
+        }
+        
+        // Estimate the size of the tile package needed to download tiles for the 500m buffer.
+        // Note, we don't actually download them - we'll just see how large the package would be.
+        await showCalculatingView(message: "Estimating tiles to download…", withProgress: true)
+
+        let estimate = try await estimateTiles(areaOfInterest: areaOfInterest)
+        
+        logMessage("Estimate Export Tiles job completed.")
+
+        // Update the graphic to indicate that we've got a result.
+        if let areaFill = areaGraphic.symbol as? AGSSimpleFillSymbol,
+           let areaOutline = areaFill.outline as? AGSSimpleLineSymbol {
+            areaFill.style = .solid
+            areaOutline.width = 5
+            areaOutline.color = areaOutline.color.withAlphaComponent(1)
+        }
+        
+        let formatter = ByteCountFormatter()
+        formatter.countStyle = .file
+        logMessage("Imagery tile cache estimate: \(estimate.tileCount) tiles, \(formatter.string(fromByteCount: Int64(estimate.fileSize)))")
+    }
+    
+    /// Calculate and display a route from west coast to east coast, and log messages.
+    ///
+    /// The method demonstrates:
+    /// * Using async/await with ArcGIS Runtime the Task pattern
+    /// * Handling a cancel event (propagated through Runtime as a Cocoa.userCanceled Error)
+    /// * Benefitting from the sequential nature of async/await code to simplify UI updates around other operations
+    func calculateAndDisplayRoute() async throws {
+        
+        let leviStadium: AGSStop = {
+            let stop = AGSStop(point: AGSPointMakeWGS84(37.403190166819925, -121.96976999999998))
+            stop.name = "Levi Stadium"
+            return stop
+        }()
+        
+        let gilletteStadium: AGSStop = {
+            let stop = AGSStop(point: AGSPointMakeWGS84(42.090960788263, -71.26438999999993))
+            stop.name = "Gillette Stadium"
+            return stop
+        }()
+
+        // Remove any previously displayed route result.
+        routeResultOverlay.graphics.removeAllObjects()
+        
+        // Calculate the route asynchronously. This can be canceled from the `cancelRoute()` @IBAction.
+        guard let route = try await calculateRoute(from: leviStadium, to: gilletteStadium).routes.first,
+              let routeGeometry = route.routeGeometry else {
+                  showAlert(title: "No route", message: "No valid route could be calculated.")
+                  return
+              }
+        
+        // Display the route in the map view.
+        routeResultOverlay.graphics.add(AGSGraphic(
+            geometry: routeGeometry,
+            symbol: AGSSimpleLineSymbol(style: .solid, color: .red, width: 2)
+        ))
+        
+        // Zoom the map view to the route.
+        Task {
+            // Put this in its own subtask so we don't wait for it to complete before we continue.
+            await mapView.setViewpoint(
+                AGSViewpoint(targetExtent: routeGeometry.extent.toBuilder().expand(byFactor: 1.1).toGeometry()),
+                duration: 2,
+                curve: .easeInOutCubic
+            )
+        }
+        
+        let routeDistanceFormatter: LengthFormatter = {
+            let f = LengthFormatter()
+            f.unitStyle = .long
+            f.isForPersonHeightUse = false
+            f.numberFormatter.maximumFractionDigits = 2
+            return f
+        }()
+
+        let routeDurationFormatter: DateComponentsFormatter = {
+            let f = DateComponentsFormatter()
+            f.includesApproximationPhrase = true
+            f.unitsStyle = .full
+            f.includesApproximationPhrase = true
+            f.allowedUnits = [.day, .hour, .minute]
+            return f
+        }()
+
+        // And log some details about the route.
+        logMessage("Got a route: \(route.routeName)")
+        logMessage("\(routeDistanceFormatter.string(fromMeters: route.totalLength)) (\(routeDurationFormatter.string(from: route.totalTime * 60)!.lowercased()))")
+    }
+
 }

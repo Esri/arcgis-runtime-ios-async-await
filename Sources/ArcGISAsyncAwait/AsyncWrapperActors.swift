@@ -66,10 +66,8 @@ public actor AsyncOperation<Success, Failure> {
     /// Calls the operation as an async throwing function.
     /// - Returns: A value representing the successful result of the operation.
     func call() async throws -> Success {
-        guard self.cancelable == nil else {
-            fatalError("It is a programming error to call `call()` more than one time per instance.")
-        }
-        
+        precondition(self.cancelable == nil, "It is a programming error to call `call()` more than one time per instance.")
+
         return try await withTaskCancellationHandler(handler: {
             Task { await cancel() }
         }, operation: {
@@ -139,10 +137,8 @@ public actor AsyncOperationNoThrow<Success> {
     /// Calls the operation as an async throwing function.
     /// - Returns: A value representing the successful result of the operation.
     func call() async -> Success {
-        guard self.cancelable == nil else {
-            fatalError("It is a programming error to call `call()` more than one time per instance.")
-        }
-        
+        precondition(self.cancelable == nil, "It is a programming error to call `call()` more than one time per instance.")
+
         return try! await withTaskCancellationHandler(handler: {
             Task { await cancel() }
         }, operation: {
@@ -199,10 +195,8 @@ actor AsyncOperationThreeSuccesses<Success, Failure> {
     /// Calls the operation as an async throwing function.
     /// - Returns: A value representing the successful result of the operation.
     func call() async throws -> (Success?, Success?, Success?) {
-        guard self.cancelable == nil else {
-            fatalError("It is a programming error to call `call()` more than one time per instance.")
-        }
-        
+        precondition(self.cancelable == nil, "It is a programming error to call `call()` more than one time per instance.")
+
         return try await withTaskCancellationHandler(handler: {
             Task { await cancel() }
         }, operation: {
