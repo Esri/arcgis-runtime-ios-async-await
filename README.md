@@ -1,5 +1,5 @@
-ArcGIS Runtime SDK for iOS async/await wrappers
-==========================
+Async/await wrappers for ArcGIS Runtime SDK for iOS 
+===================================================
 
 This repository provides async/await wrappers for [ArcGIS Runtime SDK for iOS](https://developers.arcgis.com/ios/) asynchronous methods using the Swift Concurrency capabilities introduced in Swift 5.5.
 
