@@ -2534,3 +2534,21 @@ public extension AGSWMSSublayer {
     }
     
 }
+
+
+extension Sequence where Element: AGSLoadable {
+    /// Load all `AGSLoadables` in a given `Sequence`.
+    ///
+    /// Swift Concurrency equivalent to [AGSLoadObjects(array:completion:)](https://developers.arcgis.com/ios/api-reference/_a_g_s_loadable_8h.html#a3b0d1007ca7b8805a72fa40510056708).
+    ///
+    /// - Returns: `true` if all the loadables loaded successfully, otherwise `false`.
+    @discardableResult func loadAll() async -> Bool {
+        return await withCheckedContinuation { continuation in
+            Task {
+                AGSLoadObjects(Array(self)) { didAllLoad in
+                    continuation.resume(returning: didAllLoad)
+                }
+            }
+        }
+    }
+}
