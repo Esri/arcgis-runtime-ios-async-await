@@ -9,7 +9,7 @@ Xcode will automatically generate async/await wrappers for most asynchronous met
 
 * A comprehensive set of `async` wrappers for ArcGIS Runtime SDK for iOS version 100.12 to complement those generated automatically by Xcode.
 * Helper actors to support these wrappers.
-* A demo app showing Swift Concurrency patterns in use with the ArcGIS Runtime SDK for iOS.
+* An example app showing Swift Concurrency patterns in use with the ArcGIS Runtime SDK for iOS, including canceling asynchronous operations. Just [bring your own API Key](https://developers.arcgis.com/api-keys) and [set it in the AppDelegate](Examples/ArcGISRuntimeAsync/ArcGISRuntimeAsync/AppDelegate.swift#L25).
 
 If you find any methods that are missing an async wrapper, please open an issue (or better yet, submit a PR adding the method).
 
