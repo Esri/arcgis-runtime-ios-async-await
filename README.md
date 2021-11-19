@@ -1,7 +1,7 @@
 Async/await wrappers for ArcGIS Runtime SDK for iOS 
 ===================================================
 
-This repository provides async/await wrappers for [ArcGIS Runtime SDK for iOS](https://developers.arcgis.com/ios/) asynchronous methods using the Swift Concurrency capabilities introduced in Swift 5.5.
+This repository provides async/await wrappers for [ArcGIS Runtime SDK for iOS](https://developers.arcgis.com/ios/) asynchronous methods using the Swift Concurrency capabilities introduced in Xcode 13 and Swift 5.5.
 
 Xcode will automatically generate async/await wrappers for most asynchronous methods, but if the original method returns a value, then it must be wrapped explicitly to handle that return value. Many asynchronous methods in the ArcGIS Runtime SDK for iOS return an [`AGSCancelable`](https://developers.arcgis.com/ios/api-reference/protocol_a_g_s_cancelable-p.html), and so are not automatically wrapped by Xcode. This repository provides those missing wrappers.
 
