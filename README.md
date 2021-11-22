@@ -30,7 +30,7 @@ If you find any methods that are missing an async wrapper, please open an issue 
  1. Open your project in Xcode.
  2. Go to **File** > **Add Packages…**.
  3. Enter `https://github.com/Esri/arcgis-runtime-ios-async-await` as the Package URL.
- 4. Set the `Dependency Rule` to **Branch** and reference the `main` branch. Click **Add Package**.
+ 4. Set the `Dependency Rule` to **Up to Next Major Version** and set the minimum version to `100.12.0`. Click **Add Package**.
  
  Note: The ArcGIS Runtime Async Await Swift Package adds the ArcGIS Runtime SDK package as a dependency.
 
