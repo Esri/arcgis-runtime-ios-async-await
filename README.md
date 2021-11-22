@@ -42,7 +42,7 @@ If you find any methods that are missing an async wrapper, please open an issue 
  2. Drag and drop the `AsyncWrappers.swift` and `AsyncWrapperActors.swift` files into your project through the Xcode Project Navigator pane.
 
 ## Known Issues
-* To use the cancelable `AGSJob` subclass extensions, you must manually copy the `AsyncCancelableJobWrappers.swift` file into your project. Otherwise, the compiler will prefer the non-canceling async wrappers that Xcode automatically generates from the Objective-C methods.
+* To use the cancelable `AGSJob` subclass extensions, you must manually copy the `AsyncCancelableJobWrappers.swift` file into your project. If the file were included as part of the Swift package, Xcode would generate conflicting non-canceling async wrappers.
 * This release has only been tested with Xcode 13 and iOS 15. Xcode 13.2 will open up Swift Concurrency backwards compatibility for iOS 13 and iOS 14. This hasn't been tested yet.
 
 ## Additional Resources
@@ -54,6 +54,8 @@ If you find any methods that are missing an async wrapper, please open an issue 
 ## Issues
 
 Find a bug or want to request a new feature? Please let us know by submitting an issue.
+
+Please do not contact Esri Support with bugs in this repo's code.
 
 ## Contributing
 
