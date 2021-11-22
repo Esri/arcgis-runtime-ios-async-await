@@ -23,7 +23,7 @@ If you find any methods that are missing an async wrapper, please open an issue 
 
 1. Reference the source. Either use Swift Package Manager, or include the `AsyncWrappers.swift` and `AsyncWrapperActors.swift` source files in your project (see below).
 2. If you're using the Swift Package Manager, add an `import ArcGISAsyncAwait` statement to your Swift source files.
-3. Optional: If you are executing `AGSJobs`, manually copy the `AsyncCancelableJobWrapper.swift` file into your project. See [Known Issues](#known-issues) for more details.
+3. Optional: If you are executing `AGSJobs`, manually copy the [`AsyncCancelableJobWrapper.swift`](ManualImport/AsyncCancelableJobWrappers.swift) file into your project. See [Known Issues](#known-issues) for more details.
 
 ### Swift Package Manager
 
