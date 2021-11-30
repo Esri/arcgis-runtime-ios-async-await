@@ -47,6 +47,7 @@ If you find any methods that are missing an async wrapper, please open an issue 
 
 ## Additional Resources
 
+* Learn more in [this Esri Community blog post](https://community.esri.com/t5/arcgis-runtime-sdks-blog/swift-concurrency-and-runtime/ba-p/1118809).
 * Want to start a new Runtime project? [Setup](https://developers.arcgis.com/ios/get-started) your dev environment.
 * New to the API? Explore the documentation : [Guide](https://developers.arcgis.com/ios/) | [API Reference](https://developers.arcgis.com/ios/api-reference/).
 * Got a question? Ask the community on our [forum](https://community.esri.com/t5/arcgis-runtime-sdk-for-ios-questions/bd-p/arcgis-runtime-sdk-for-ios-questions).
