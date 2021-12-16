@@ -17,7 +17,7 @@ If you find any methods that are missing an async wrapper, please open an issue 
 
 * [ArcGIS Runtime SDK for iOS](https://developers.arcgis.com/ios/) 100.12.0 (or newer)
 * Xcode 13.0 (or newer)
-* iOS 15 (or newer)
+* iOS 13 (or newer). [If using Xcode 13.0 or 13.1, then iOS 15 (or newer).]
 
 ## Instructions
 
