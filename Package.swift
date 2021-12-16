@@ -31,7 +31,7 @@ let package = Package(
         )
     ],
     dependencies: [
-        .package(url: "https://github.com/Esri/arcgis-runtime-ios", .upToNextMinor(from: "100.12.0"))
+        .package(url: "https://github.com/Esri/arcgis-runtime-ios", .upToNextMinor(from: "100.13.0"))
     ],
     targets: [
         .target(
