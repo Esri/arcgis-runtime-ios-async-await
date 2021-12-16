@@ -382,6 +382,29 @@ public extension AGSDictionarySymbolStyle {
     
 }
 
+public extension AGSDimensionLayer {
+    
+    /** Returns a list of the currently selected features.
+     */
+    func selectedFeatures() async throws -> AGSFeatureQueryResult {
+        try await AsyncOperation {
+            self.selectedFeatures(completion: $0)
+        }.call()
+    }
+    
+    /** Selects the features that match the criteria in the @c AGSQueryParameters object and
+     adds them to the current list of selected features.
+     @param parameters The definition of the query to submit to the feature table.
+     @param mode Defines how the list of currently selected features will be updated with the features returned from the query.
+     */
+    @discardableResult func selectFeatures(with parameters: AGSQueryParameters, mode: AGSSelectionMode) async throws -> AGSFeatureQueryResult {
+        try await AsyncOperation {
+            self.selectFeatures(with: parameters, mode: mode, completion: $0)
+        }.call()
+    }
+    
+}
+
 public extension AGSExportTileCacheTask {
     
     /** Creates and returns a @c Future of @c AGSExportTileCacheParameters.
