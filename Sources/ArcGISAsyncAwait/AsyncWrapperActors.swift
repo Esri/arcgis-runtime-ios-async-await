@@ -93,15 +93,63 @@ public actor AsyncOperation<Success, Failure> {
     }
 }
 
-public extension AsyncOperation where Success == Void {
-    /// A special case for when the asynchronous function can succeed with no result, or throw an error.
-    convenience init(_ operationProvider: @escaping (@escaping (Failure?) -> Void) -> AGSCancelable) {
-        self.init { (completion: @escaping (Void?, Failure?) -> Void) in
-            operationProvider { failure in
-                completion(nil, failure)
-            }
-        }
+/// An actor that is useful for wrapping an "asynchronous operation" and allowing it to be called
+/// with Swift's `async` keyword. The asynchronous operation is expected to take a completion
+/// handler and return a cancelable, but cannot throw an error.
+public actor AsyncOperationErrorOnly<Failure> {
+    
+    /// The cancelable returned by the operation provider.
+    private var cancelable: AGSCancelable?
+    
+    /// The operation provider.
+    private let operationProvider: (@escaping (Failure?) -> Void) -> AGSCancelable?
+    
+    /// Initializes an AsyncOperation with an operation provider.
+    /// - Parameter operationProvider: An operation provider which is a closure that takes a
+    /// completion handler and returns a cancellable. The completion handler must be called when
+    /// the operation is completed. This is usually conveniently done by forwarding it to the
+    /// operation.
+    /// An example would be:
+    /// ```
+    ///  AsyncOperation { self.suggest(withSearchText: text, completion: $0) }
+    ///  ```
+    init(_ operationProvider: @escaping (@escaping (Failure) -> Void) -> AGSCancelable) {
+        self.operationProvider = operationProvider
     }
+    
+    /// Cancels the wrapped operation.
+    private func cancel() {
+        self.cancelable?.cancel()
+        self.cancelable = nil
+    }
+
+    /// Calls the operation as an async throwing function.
+    /// - Returns: A value representing the successful result of the operation.
+    func call() async throws {
+        precondition(self.cancelable == nil, "It is a programming error to call `call()` more than one time per instance.")
+
+        return try await withTaskCancellationHandler(handler: {
+            Task { await cancel() }
+        }, operation: {
+            try Task.checkCancellation()
+            return try await withUnsafeThrowingContinuation { continuation in
+                guard !Task.isCancelled else {
+                    continuation.resume(throwing: CancellationError())
+                    return
+                }
+                Task {
+                    cancelable = operationProvider { error in
+                        if let error = error as? Error {
+                            continuation.resume(throwing: error)
+                        } else {
+                            continuation.resume()
+                        }
+                    }
+                }
+            }
+        })
+    }
+
 }
 
 /// An actor that is useful for wrapping an "asynchronous operation" and allowing it to be called
