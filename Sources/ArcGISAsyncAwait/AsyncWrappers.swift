@@ -69,7 +69,7 @@ public extension AGSArcGISFeature {
      @see @c AGSFeatureServiceSessionType
      */
     func delete(_ attachment: AGSAttachment) async throws {
-        try await AsyncOperation {
+        try await AsyncOperationErrorOnly {
             self.delete(attachment, completion: $0)
         }.call()
     }
@@ -79,7 +79,7 @@ public extension AGSArcGISFeature {
      @see @c AGSFeatureServiceSessionType
      */
     func delete(_ attachments: Array<AGSAttachment>) async throws {
-        try await AsyncOperation {
+        try await AsyncOperationErrorOnly {
             self.delete(attachments, completion: $0)
         }.call()
     }
@@ -101,7 +101,7 @@ public extension AGSArcGISFeature {
      @see @c AGSFeatureServiceSessionType
      */
     func update(_ attachmentInfo: AGSAttachment, name: String, contentType: String, data: Data) async throws {
-        try await AsyncOperation {
+        try await AsyncOperationErrorOnly {
             self.update(attachmentInfo, name: name, contentType: contentType, data: data, completion: $0)
         }.call()
     }
@@ -289,7 +289,7 @@ public extension AGSArcGISMapImageLayer {
     /** Loads all of the map service's sublayers and non spatial tables.
      */
     func loadTablesAndLayers() async throws {
-        try await AsyncOperation {
+        try await AsyncOperationErrorOnly {
             self.loadTablesAndLayers(completion: $0)
         }.call()
     }
@@ -510,7 +510,7 @@ public extension AGSFeatureTable {
      @see @c AGSFeatureServiceSessionType
      */
     func add(_ feature: AGSFeature) async throws {
-        try await AsyncOperation {
+        try await AsyncOperationErrorOnly {
             self.add(feature, completion: $0)
         }.call()
     }
@@ -520,7 +520,7 @@ public extension AGSFeatureTable {
      @see @c AGSFeatureServiceSessionType
      */
     func add(_ features: Array<AGSFeature>) async throws {
-        try await AsyncOperation {
+        try await AsyncOperationErrorOnly {
             self.add(features, completion: $0)
         }.call()
     }
@@ -530,7 +530,7 @@ public extension AGSFeatureTable {
      @see @c AGSFeatureServiceSessionType
      */
     func delete(_ feature: AGSFeature) async throws {
-        try await AsyncOperation {
+        try await AsyncOperationErrorOnly {
             self.delete(feature, completion: $0)
         }.call()
     }
@@ -540,7 +540,7 @@ public extension AGSFeatureTable {
      @see @c AGSFeatureServiceSessionType
      */
     func delete(_ features: Array<AGSFeature>) async throws {
-        try await AsyncOperation {
+        try await AsyncOperationErrorOnly {
             self.delete(features, completion: $0)
         }.call()
     }
@@ -594,7 +594,7 @@ public extension AGSFeatureTable {
      @see @c AGSFeatureServiceSessionType
      */
     func update(_ feature: AGSFeature) async throws {
-        try await AsyncOperation {
+        try await AsyncOperationErrorOnly {
             self.update(feature, completion: $0)
         }.call()
     }
@@ -604,7 +604,7 @@ public extension AGSFeatureTable {
      @see @c AGSFeatureServiceSessionType
      */
     func update(_ features: Array<AGSFeature>) async throws {
-        try await AsyncOperation {
+        try await AsyncOperationErrorOnly {
             self.update(features, completion: $0)
         }.call()
     }
@@ -735,7 +735,7 @@ public extension AGSGeodatabaseSyncTask {
      @param geodatabase a geodatabase to register.
      */
     func registerSyncEnabledGeodatabase(_ geodatabase: AGSGeodatabase) async throws {
-        try await AsyncOperation {
+        try await AsyncOperationErrorOnly {
             self.registerSyncEnabledGeodatabase(geodatabase, completion: $0)
         }.call()
     }
@@ -748,7 +748,7 @@ public extension AGSGeodatabaseSyncTask {
      @param geodatabase a geodatabase to unregister.
      */
     func unregisterGeodatabase(_ geodatabase: AGSGeodatabase) async throws {
-        try await AsyncOperation {
+        try await AsyncOperationErrorOnly {
             self.unregisterGeodatabase(geodatabase, completion: $0)
         }.call()
     }
@@ -763,7 +763,7 @@ public extension AGSGeodatabaseSyncTask {
      @param syncID sync ID of geodatabase to unregister.
      */
     func unregisterGeodatabase(withSyncID syncID: UUID) async throws {
-        try await AsyncOperation {
+        try await AsyncOperationErrorOnly {
             self.unregisterGeodatabase(withSyncID: syncID, completion: $0)
         }.call()
     }
@@ -830,7 +830,7 @@ public extension AGSGeotriggerMonitor {
      @c AGSGeotriggerMonitorStatusStarted.
      */
     func start() async throws {
-        try await AsyncOperation {
+        try await AsyncOperationErrorOnly {
             self.start(completion: $0)
         }.call()
     }
@@ -1096,7 +1096,7 @@ public extension AGSItem {
      error in the async task.
      */
     func updateProperties() async throws {
-        try await AsyncOperation {
+        try await AsyncOperationErrorOnly {
             self.updateProperties(completion: $0)
         }.call()
     }
@@ -1113,7 +1113,7 @@ public extension AGSJob {
      The result can be @c NO if the job is not checking server status for example if the job status is paused or uploading.
      */
     func checkStatus() async throws {
-        try await AsyncOperation {
+        try await AsyncOperationErrorOnly {
             self.checkStatus(completion: $0)
         }.call()
     }
@@ -1139,7 +1139,7 @@ public extension AGSKMLNode {
      @param fileURL The KMZ filepath to which the node should be saved.
      */
     func save(toFileURL fileURL: URL) async throws {
-        try await AsyncOperation {
+        try await AsyncOperationErrorOnly {
             self.save(toFileURL: fileURL, completion: $0)
         }.call()
     }
@@ -1401,7 +1401,7 @@ public extension AGSMobileMapPackage {
      @param outputDirectory a path to a directory to write the mobile map package contents.
      */
     static func unpack(atFileURL fileURL: URL, outputDirectory: URL) async throws {
-        try await AsyncOperation {
+        try await AsyncOperationErrorOnly {
             AGSMobileMapPackage.unpack(atFileURL: fileURL, outputDirectory: outputDirectory, completion: $0)
         }.call()
     }
@@ -1424,7 +1424,7 @@ public extension AGSMobileScenePackage {
      @param outputDirectory a path to a directory to write the mobile scene package contents.
      */
     static func unpack(atFileURL fileURL: URL, outputDirectory: URL) async throws {
-        try await AsyncOperation {
+        try await AsyncOperationErrorOnly {
             AGSMobileScenePackage.unpack(atFileURL: fileURL, outputDirectory: outputDirectory, completion: $0)
         }.call()
     }
@@ -1437,7 +1437,7 @@ public extension AGSMosaicDatasetRaster {
      @param parameters The add rasters parameters object.
      */
     func addRasters(_ parameters: AGSAddRastersParameters) async throws {
-        try await AsyncOperation {
+        try await AsyncOperationErrorOnly {
             self.addRasters(parameters, completion: $0)
         }.call()
     }
@@ -1798,7 +1798,7 @@ public extension AGSPortalItem {
     
     
     func addRating(_ rating: Double) async throws {
-        try await AsyncOperation {
+        try await AsyncOperationErrorOnly {
             self.addRating(rating, completion: $0)
         }.call()
     }
@@ -1844,7 +1844,7 @@ public extension AGSPortalItem {
     
     
     func share(withEveryone everyone: Bool, org: Bool) async throws {
-        try await AsyncOperation {
+        try await AsyncOperationErrorOnly {
             self.share(withEveryone: everyone, org: org, completion: $0)
         }.call()
     }
@@ -1863,7 +1863,7 @@ public extension AGSPortalItem {
     
     
     func unshare() async throws {
-        try await AsyncOperation {
+        try await AsyncOperationErrorOnly {
             self.unshare(completion: $0)
         }.call()
     }
@@ -1882,7 +1882,7 @@ public extension AGSPortalItem {
     
     
     func update(_ data: Data) async throws {
-        try await AsyncOperation {
+        try await AsyncOperationErrorOnly {
             self.update(data, completion: $0)
         }.call()
     }
@@ -1890,7 +1890,7 @@ public extension AGSPortalItem {
     
     
     func updateData(withJSON JSON: String) async throws {
-        try await AsyncOperation {
+        try await AsyncOperationErrorOnly {
             self.updateData(withJSON: JSON, completion: $0)
         }.call()
     }
@@ -1978,7 +1978,7 @@ public extension AGSRouteTracker {
      @param parameters An @c AGSReroutingParameters allow customizing background rerouting.
      */
     func enableRerouting(with parameters: AGSReroutingParameters) async throws {
-        try await AsyncOperation {
+        try await AsyncOperationErrorOnly {
             self.enableRerouting(with: parameters, completion: $0)
         }.call()
     }
@@ -1994,7 +1994,7 @@ public extension AGSRouteTracker {
      @c AGSRouteTracker#trackLocation:completion: is needed for getting @c AGSTrackingStatus and for handling visitFirstStopOnStart.
      */
     func switchToNextDestination() async throws {
-        try await AsyncOperation {
+        try await AsyncOperationErrorOnly {
             self.switchToNextDestination(completion: $0)
         }.call()
     }
@@ -2009,7 +2009,7 @@ public extension AGSRouteTracker {
      @see @c AGSLocation
      */
     func trackLocation(_ location: AGSLocation) async throws {
-        try await AsyncOperation {
+        try await AsyncOperationErrorOnly {
             self.trackLocation(location, completion: $0)
         }.call()
     }
@@ -2114,7 +2114,7 @@ public extension AGSServiceFeatureTable {
      @param features An @c NSMutableArray of @c AGSFeature.
      */
     func loadOrRefreshFeatures(_ features: [AGSArcGISFeature]) async throws {
-        try await AsyncOperation {
+        try await AsyncOperationErrorOnly {
             self.loadOrRefreshFeatures(features, completion: $0)
         }.call()
     }
@@ -2203,7 +2203,7 @@ public extension AGSServiceFeatureTable {
      @see @c AGSFeatureServiceSessionType
      */
     func undoLocalEdits() async throws {
-        try await AsyncOperation {
+        try await AsyncOperationErrorOnly {
             self.undoLocalEdits(completion: $0)
         }.call()
     }
@@ -2239,7 +2239,7 @@ public extension AGSServiceGeodatabase {
      Closing this service geodatabase is not necessary if it has not been loaded.
      */
     func close() async throws {
-        try await AsyncOperation {
+        try await AsyncOperationErrorOnly {
             self.close(completion: $0)
         }.call()
     }
@@ -2288,7 +2288,7 @@ public extension AGSServiceGeodatabase {
      @param versionName The name of the version to connect to.
      */
     func switchVersion(withName name: String) async throws {
-        try await AsyncOperation {
+        try await AsyncOperationErrorOnly {
             self.switchVersion(withName: name, completion: $0)
         }.call()
     }
@@ -2297,7 +2297,7 @@ public extension AGSServiceGeodatabase {
      @see @c AGSFeatureServiceSessionType
      */
     func undoLocalEdits() async throws {
-        try await AsyncOperation {
+        try await AsyncOperationErrorOnly {
             self.undoLocalEdits(completion: $0)
         }.call()
     }
@@ -2565,7 +2565,7 @@ extension Sequence where Element: AGSLoadable {
     /// Swift Concurrency equivalent to [AGSLoadObjects(array:completion:)](https://developers.arcgis.com/ios/api-reference/_a_g_s_loadable_8h.html#a3b0d1007ca7b8805a72fa40510056708).
     ///
     /// - Returns: `true` if all the loadables loaded successfully, otherwise `false`.
-    @discardableResult public func loadAll() async -> Bool {
+    @discardableResult func loadAll() async -> Bool {
         return await withCheckedContinuation { continuation in
             Task {
                 AGSLoadObjects(Array(self)) { didAllLoad in
